@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - VINPROPEL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f0f7fe 0%, #ffffff 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 113, 220, 0.1);
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid var(--border);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .login-header .logo-text {
+            font-size: 2rem;
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 113, 220, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .login-btn:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .back-home a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-card">
+        <div class="login-header">
+            <span class="logo-text">VINPROPEL</span>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">Administrative Access</p>
+        </div>
+        <form id="login-form">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="username" placeholder="admin" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="login-btn">Sign In</button>
+        </form>
+        <div class="back-home">
+            <a href="index.html"><i data-lucide="arrow-left" style="width: 14px;"></i> Back to Website</a>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        document.getElementById('login-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            // Updated Strong Credentials
+            // USERNAME: vp_admin_core
+            // PASSWORD: VinPropel@Propulsion#2026!
+            if (user === 'vp_admin_core' && pass === 'VinPropel@Propulsion#2026!') {
+                sessionStorage.setItem('isAdmin', 'true');
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                alert('Access Denied. Internal Security Protocol triggered.');
+            }
+        });
+    </script>
+</body>
+
+</html>

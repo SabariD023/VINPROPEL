@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - VINPROPEL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --sidebar-width: 260px;
+        }
+
+        body {
+            background: #f4f7fa;
+            display: flex;
+            min-height: 100vh;
+            user-select: none;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-dark);
+            color: white;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar .logo-text {
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .nav-menu {
+            flex: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .nav-item:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 2.5rem;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--border);
+        }
+
+        .stat-box h4 {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-box .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .data-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            background: #f8fafc;
+            padding: 1rem 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.95rem;
+        }
+
+        .product-tag {
+            background: #eff6ff;
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .btn-logout {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: auto;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body oncontextmenu="return false;">
+    <!-- Ironclad Anti-Inspect Security -->
+    <div id="security-screen"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:white; z-index:9999; flex-direction:column; align-items:center; justify-content:center; text-align:center; font-family:var(--font-heading);">
+        <i data-lucide="shield-alert" style="width:100px; height:100px; color:var(--primary); margin-bottom:2rem;"></i>
+        <h1 style="font-size:2.5rem; color:var(--text-main);">SECURITY PROTOCOL ACTIVE</h1>
+        <p style="font-size:1.2rem; color:var(--text-muted); max-width:500px; margin-top:1rem;">Unauthorized data
+            extraction attempt detected. The dashboard has been locked and data obfuscated for your protection.</p>
+        <button onclick="window.location.reload()" class="btn btn-primary"
+            style="margin-top:2rem; padding: 1rem 2rem;">Re-verify Identity</button>
+    </div>
+
+    <script>
+        // 1. Block Keyboard Access
+        document.onkeydown = function (e) {
+            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
+                return false;
+            }
+        };
+
+        // 2. Aggregate Detection Logic
+        const lockDashboard = () => {
+            const screen = document.getElementById('security-screen');
+            if (screen) screen.style.display = 'flex';
+            document.querySelectorAll('.sidebar, .main-content').forEach(el => el.style.filter = 'blur(20px)');
+            console.clear();
+        };
+
+        // 3. Hardware Debugger Trap (Aggressive)
+        /*const checkDebugger = () => {
+            const start = performance.now();
+            debugger;
+            if (performance.now() - start > 100) {
+                lockDashboard();
+                window.location.href = "about:blank";
+            }
+        };
+        setInterval(checkDebugger, 100);*/
+
+        // 4. Content Dimension Check (Detects Docked DevTools)
+        /*const checkDimensions = () => {
+            const threshold = 160;
+            if (window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) {
+                lockDashboard();
+            }
+        };
+        window.addEventListener('resize', checkDimensions);
+        setInterval(checkDimensions, 1000);
+
+        // 5. Console Pollution (Prevents automated scraping via console)
+        Object.defineProperty(window, 'console', {
+            value: {
+                log: () => { },
+                error: () => { },
+                warn: () => { },
+                info: () => { },
+                clear: () => { }
+            },
+            writable: false
+        });*/
+    </script>
+
+    <aside class="sidebar">
+        <div class="logo-text">VINPROPEL</div>
+       <nav class="nav-menu">
+
+    <!-- NEW Products Menu -->
+    <div class="nav-item" id="nav-products" onclick="showView('products')">
+        <i data-lucide="package" style="width:20px;"></i>
+        Products
+    </div>
+
+    <div class="nav-item active" id="nav-requests" onclick="showView('requests')">
+        <i data-lucide="inbox" style="width:20px;"></i>
+        Technical Requests
+    </div>
+
+    <div class="nav-item" id="nav-clients" onclick="showView('clients')">
+        <i data-lucide="users" style="width:20px;"></i>
+        Client Details
+    </div>
+
+    <div class="nav-item">
+        <i data-lucide="settings" style="width:20px;"></i>
+        Settings
+    </div>
+
+</nav>
+        <a href="login.html" class="btn-logout" id="logout-btn">
+            <i data-lucide="log-out" style="width: 18px;"></i>
+            Sign Out
+        </a>
+    </aside>
+
+    <main class="main-content">
+        <!-- ================= Products View ================= -->
+
+<div id="products-view" style="display:none;">
+
+    <div class="dashboard-header">
+        <div>
+            <h2 id="productTitle">Product Management</h2>
+            <p>Add, Edit and Delete Products</p>
+        </div>
+    </div>
+
+    <div class="data-card" style="padding:25px;">
+
+        <input id="product_name" placeholder="Product Name"><br><br>
+
+        <input id="model_number" placeholder="Model Number"><br><br>
+
+        <textarea
+            id="description"
+            placeholder="Description"
+            rows="4"></textarea><br><br>
+        <label>IMAGE</label><br>
+        <input
+            type="file"
+            id="product_image">
+            <div id="currentImageBox" style="margin-top:10px;"></div><br><br>
+        <label>Product PDF</label><br>
+
+<input
+    type="file"
+    id="product_pdf"
+    accept=".pdf"><div id="currentPdfBox" style="margin-top:10px;"></div><br><br>    
+
+        <input id="rated_voltage" placeholder="Rated Voltage"><br><br>
+
+        <input id="rated_power" placeholder="Rated Power"><br><br>
+
+        <input id="max_power" placeholder="Maximum Power"><br><br>
+
+        <input id="rated_speed" placeholder="Rated Speed"><br><br>
+
+        <input id="max_speed" placeholder="Maximum Speed"><br><br>
+
+        <input id="hover_thrust" placeholder="Hover Thrust"><br><br>
+
+        <input id="max_thrust" placeholder="Maximum Thrust"><br><br>
+
+        <input id="propeller_size" placeholder="Propeller Size"><br><br>
+
+        <button
+            class="btn btn-primary"
+            id="saveBtn"
+            onclick="addProduct()">
+
+            Save Product
+
+        </button>
+
+    </div>
+
+    <br>
+
+    <div class="data-card">
+
+        <div class="card-header">
+
+            <h3>Products</h3>
+
+            <div style="position:relative; width:300px;">
+
+    <input
+        id="searchProduct"
+        placeholder="Search Product..."
+        onkeyup="searchProducts()"
+        autocomplete="off">
+
+    <div id="searchSuggestions"
+         style="
+            position:absolute;
+            top:40px;
+            left:0;
+            right:0;
+            background:white;
+            border:1px solid #ddd;
+            display:none;
+            max-height:200px;
+            overflow:auto;
+            z-index:999;">
+    </div>
+
+</div>
+
+        </div>
+<table>
+
+    <thead>
+
+        <tr>
+
+            <th>ID</th>
+
+            <th>Image</th>
+
+            <th>Product Name</th>
+
+            <th>Model No.</th>
+
+            <th>Rated Voltage</th>
+
+            <th>Actions</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody id="productTable">
+
+    </tbody>
+
+</table>
+
+    </div>
+
+</div>
+        <!-- Technical Requests View -->
+        <div id="requests-view">
+            <div class="dashboard-header">
+                <div>
+                    <h2 style="color: var(--text-main); font-size: 1.75rem;">Technical Discussion Requests</h2>
+                    <p style="color: var(--text-muted);">Manage and view incoming inquiries from the website.</p>
+                </div>
+                <button class="btn btn-primary-small" onclick="exportData()">
+                    <i data-lucide="download" style="width: 16px;"></i> Export Data
+                </button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <h4>Total Requests</h4>
+                    <div class="value" id="total-count">0</div>
+                </div>
+                <div class="stat-box">
+                    <h4>Top Product</h4>
+                    <div class="value" id="top-product">-</div>
+                </div>
+                <div class="stat-box">
+                    <h4>Today</h4>
+                    <div class="value" id="today-count">0</div>
+                </div>
+            </div>
+
+            <div class="data-card">
+                <div class="card-header">
+                    <h3 style="font-size: 1.1rem; color: var(--text-main);">Recent Inquiries</h3>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Inquirer</th>
+                                <th>Company</th>
+                                <th>Product</th>
+                                <th>Payload</th>
+                                <th>Contact</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requests-list"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Client Details View -->
+        <div id="clients-view" style="display: none;">
+            <div class="dashboard-header">
+                <div>
+                    <h2 style="color: var(--text-main); font-size: 1.75rem;">Client Details</h2>
+                    <p style="color: var(--text-muted);">Master list of authenticated companies and individuals.</p>
+                </div>
+            </div>
+
+            <div class="data-card">
+                <div class="card-header">
+                    <h3 style="font-size: 1.1rem; color: var(--text-main);">Registered Clients</h3>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Company</th>
+                                <th>Contact Info</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clients-list"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Check Auth
+        if (sessionStorage.getItem('isAdmin') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        lucide.createIcons();
+
+        const storageKey = '_vp_data_sys_';
+
+        function getStoredData() {
+            const raw = localStorage.getItem(storageKey);
+            if (!raw) return [];
+            try {
+                return JSON.parse(atob(raw));
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function showView(viewName) {
+
+    // Hide all views
+    document.getElementById("products-view").style.display = "none";
+    document.getElementById("requests-view").style.display = "none";
+    document.getElementById("clients-view").style.display = "none";
+
+    // Remove active class
+    document.getElementById("nav-products").classList.remove("active");
+    document.getElementById("nav-requests").classList.remove("active");
+    document.getElementById("nav-clients").classList.remove("active");
+
+    // Products
+    if (viewName === "products") {
+
+        document.getElementById("products-view").style.display = "block";
+        document.getElementById("nav-products").classList.add("active");
+
+        loadProducts();
+
+    }
+
+    // Technical Requests
+    else if (viewName === "requests") {
+
+        document.getElementById("requests-view").style.display = "block";
+        document.getElementById("nav-requests").classList.add("active");
+
+        loadRequests();
+
+    }
+
+    // Client Details
+    else if (viewName === "clients") {
+
+        document.getElementById("clients-view").style.display = "block";
+        document.getElementById("nav-clients").classList.add("active");
+
+        loadClients();
+
+    }
+
+}
+
+        function loadRequests() {
+            const requests = getStoredData();
+            const list = document.getElementById('requests-list');
+            document.getElementById('total-count').innerText = requests.length;
+            list.innerHTML = '';
+
+            if (requests.length === 0) {
+                list.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 3rem; color: var(--text-muted);">No requests found.</td></tr>';
+                return;
+            }
+
+            const productCounts = {};
+            requests.forEach(r => { productCounts[r.product] = (productCounts[r.product] || 0) + 1; });
+            const top = Object.entries(productCounts).sort((a, b) => b[1] - a[1])[0];
+            if (top) document.getElementById('top-product').innerText = top[0];
+
+            [...requests].reverse().forEach(req => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><span style="font-size:0.8rem; color:var(--text-muted)">${req.date}</span></td>
+                    <td><div style="font-weight:600">${req.name}</div></td>
+                    <td>${req.company}</td>
+                    <td><span class="product-tag">${req.product}</span></td>
+                    <td>${req.payload}</td>
+                    <td><div style="font-size:0.85rem">${req.email}</div><div style="font-size:0.8rem; color:var(--text-muted)">${req.phone}</div></td>
+                    <td><button onclick="viewDetails(${req.id})" style="background:transparent; border:none; color:var(--primary); cursor:pointer;"><i data-lucide="eye" style="width: 18px;"></i></button></td>
+                `;
+                list.appendChild(row);
+            });
+            lucide.createIcons();
+        }
+
+        function loadClients() {
+            const requests = getStoredData();
+            const list = document.getElementById('clients-list');
+            list.innerHTML = '';
+
+            const clientsMap = new Map();
+            requests.forEach(req => {
+                if (!clientsMap.has(req.email)) {
+                    clientsMap.set(req.email, { name: req.name, company: req.company, email: req.email, phone: req.phone });
+                }
+            });
+
+            if (clientsMap.size === 0) {
+                list.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 3rem; color: var(--text-muted);">No clients registered yet.</td></tr>';
+                return;
+            }
+
+            clientsMap.forEach(client => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><div style="font-weight:600">${client.name}</div></td>
+                    <td>${client.company}</td>
+                    <td><div style="font-size:0.85rem">${client.email}</div><div style="font-size:0.8rem; color:var(--text-muted)">${client.phone}</div></td>
+                    <td><span class="product-tag" style="background:#f0fdf4; color:#16a34a;">Verified Lead</span></td>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        function viewDetails(id) {
+            const requests = getStoredData();
+            const req = requests.find(r => r.id === id);
+            if (req) alert(`Message from ${req.name}:\n\n"${req.message || 'No message.'}"`);
+        }
+
+        function exportData() {
+            const requests = getStoredData();
+            const blob = new Blob([JSON.stringify(requests, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'vp_backup.json';
+            a.click();
+        }
+
+        document.getElementById('logout-btn').addEventListener('click', () => sessionStorage.removeItem('isAdmin'));
+        window.onload = () => {
+
+    showView("products");
+
+};
+    </script>
+    <script src="admin.js"></script>
+</body>
+
+</html>

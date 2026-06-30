@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>VINPROPEL Product</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      /*==========================================
+        PRODUCT DETAILS PAGE
+==========================================*/
+
+.datasheet-container{
+   padding:90px 0 30px;
+    background:#f8fbff;
+}
+
+.breadcrumb{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    font-size:16px;
+    color: black;
+    margin-bottom:25px;
+    font-weight: 700;
+}
+
+.breadcrumb a{
+    color:#3d3f42;
+    text-decoration:none;
+}
+
+.breadcrumb span{
+    color:#0d6efd;
+    font-weight:600;
+}
+
+.section-tag{
+
+    display:inline-block;
+
+    background:#eaf3ff;
+
+    color:#0d6efd;
+
+    padding:10px 20px;
+
+    border-radius:30px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    margin-bottom:1px;
+
+}
+
+.datasheet-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-end;
+
+    margin-bottom:20px;
+
+}
+
+.product-title h1{
+
+    font-family:var(--font-heading);
+
+    font-size:60px;
+
+    font-weight:800;
+
+    color:#16233f;
+
+    margin-bottom:5px;
+
+}
+
+.product-title p{
+
+    color:#64748b;
+
+    font-size:20px;
+
+}
+
+.print-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:14px 28px;
+
+    border:2px solid #0d6efd;
+
+    color:#0d6efd;
+
+    border-radius:50px;
+
+    font-weight:750;
+
+    transition:.3s;
+
+}
+
+.print-btn:hover{
+
+    background:#0d6efd;
+
+    color:white;
+
+}
+
+.datasheet-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:30px;
+
+    margin-top:20px;
+
+}
+
+.visual-side{
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:35px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:520px;
+
+}
+
+.visual-side img{
+
+    width:100%;
+
+    max-width:370px;
+
+    height:350px;
+
+    object-fit:contain;
+
+}
+
+.specs-side{
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:38px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+}
+
+.specs-side h2{
+
+    font-family:var(--font-heading);
+
+    font-size:26px;
+
+    margin-bottom:15px;
+
+    color:#16233f;
+    font-weight: 700;
+
+}
+
+.spec-table-full{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.spec-table-full tr{
+
+    border-bottom:1px solid #edf2f7;
+
+}
+
+.spec-table-full tr:last-child{
+
+    border:none;
+
+}
+
+.spec-table-full td{
+    padding:13px 0;
+    font-size:18px;
+}
+
+.spec-label{
+
+    font-size:17px;
+
+    color:#64748b;
+
+    font-weight:500;
+
+}
+
+.spec-value{
+
+    text-align:right;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    color:#0d6efd;
+
+}
+
+.description-box{
+
+    background:white;
+
+    margin-top:20px;
+
+    border-radius:22px;
+
+    padding:24px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+}
+
+.description-box h3{
+
+    font-family:var(--font-heading);
+
+    font-size:28px;
+
+    margin-bottom:18px;
+
+    color:#16233f;
+
+}
+
+.description-box p{
+
+    color:#64748b;
+
+    font-size:17px;
+
+    line-height:1.9;
+
+}
+
+@media(max-width:992px){
+
+.datasheet-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.datasheet-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:20px;
+
+}
+
+.product-title h1{
+
+font-size:40px;
+
+}
+
+.visual-side{
+    height:420px;
+    padding:20px;
+}
+
+.visual-side img{
+
+height:300px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.datasheet-container{
+
+padding:100px 0 40px;
+
+}
+
+.product-title h1{
+
+font-size:36px;
+
+}
+
+.product-title p{
+
+font-size:18px;
+
+}
+
+.specs-side{
+
+padding:28px;
+
+}
+
+.visual-side{
+
+padding:20px;
+
+}
+.container{
+    max-width:1280px;
+    margin:auto;
+    padding:0 24px;
+}
+
+.print-btn{
+    text-decoration:none;
+}
+
+.print-btn i{
+    width:18px;
+    height:18px;
+}
+
+.description-box h3{
+    font-size:24px;
+    margin-bottom:15px;
+}
+
+.description-box p{
+    font-size:15px;
+    line-height:1.8;
+}
+.contact-btn{
+
+    background:#0d6efd;
+    color:white !important;
+
+    padding:14px 28px;
+
+    border-radius:12px;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+    box-shadow:0 10px 25px rgba(13,110,253,.25);
+
+}
+
+.contact-btn:hover{
+
+    background:#0056d6;
+
+    transform:translateY(-2px);
+
+}
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:40px;
+}
+
+.nav-links a{
+    font-size:18px;
+    font-weight:600;
+    color:#16233f;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:#0d6efd;
+}
+
+}
+  
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+    <div class="container">
+
+        <a href="index.html" class="logo">
+            <span class="logo-text">VINPROPEL</span>
+        </a>
+
+       <div class="nav-links">
+
+    <a href="index.html">Home</a>
+
+    <a href="index.html#lineup">Products</a>
+
+    <a href="index.html#engineering">Engineering</a>
+
+    <a href="index.html#about">About</a>
+
+    <a href="index.html#contact" class="btn btn-primary contact-btn">
+        Contact Sales
+    </a>
+
+</div>
+    </div>
+</nav>
+    <div class="datasheet-container">
+      <div class="container">
+        <div class="datasheet-header">
+          <div class="product-title">
+
+    <div class="breadcrumb">
+
+        <a href="index.html">Home</a>
+
+        <span>></span>
+
+        <a href="index.html#lineup">Products</a>
+
+        <span>></span>
+
+        <span id="breadProduct">
+            Product
+        </span>
+
+    </div>
+
+    <div class="section-tag">
+
+        UAV Propulsion Unit
+
+    </div>
+
+    <h1 id="productName">
+
+        Loading...
+
+    </h1>
+
+    <p id="productDescription">
+
+        Loading...
+
+    </p>
+
+</div>
+         <a id="downloadPdf"
+   class="print-btn"
+   target="_blank">
+
+    <i data-lucide="download"></i>
+
+    Download PDF
+
+</a>
+        </div>
+       <div class="datasheet-grid">
+
+    <div class="visual-side">
+        <img id="productImage" />
+    </div>
+
+    <div class="specs-side">
+
+        <h2>Core Parameters</h2>
+
+        <table class="spec-table-full">
+
+            <tr>
+                <td>Rated Voltage</td>
+                <td class="spec-value" id="ratedVoltage"></td>
+            </tr>
+
+            <tr>
+                <td>Rated Power</td>
+                <td class="spec-value" id="ratedPower"></td>
+            </tr>
+
+            <tr>
+                <td>Maximum Power</td>
+                <td class="spec-value" id="maxPower"></td>
+            </tr>
+
+            <tr>
+                <td>Rated Speed</td>
+                <td class="spec-value" id="ratedSpeed"></td>
+            </tr>
+
+            <tr>
+                <td>Maximum Speed</td>
+                <td class="spec-value" id="maxSpeed"></td>
+            </tr>
+
+            <tr>
+                <td>Hover Thrust</td>
+                <td class="spec-value" id="hoverThrust"></td>
+            </tr>
+
+            <tr>
+                <td>Maximum Thrust</td>
+                <td class="spec-value" id="maxThrust"></td>
+            </tr>
+
+            <tr>
+                <td>Propeller Size</td>
+                <td class="spec-value" id="propellerSize"></td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</div>
+
+</div>
+    </div>
+    <script>
+      const id = new URLSearchParams(window.location.search).get("id");
+      fetch("http://localhost:5000/product/" + id)
+        .then((r) => r.json())
+        .then((p) => {
+          productName.innerText = p.product_name || "";
+          document.getElementById("breadProduct").innerText =
+    p.product_name || "";
+          productDescription.innerText = p.description || "";
+
+
+          productImage.src = "http://localhost:5000/uploads/" + p.image;
+          document.getElementById("downloadPdf").href =
+"http://localhost:5000/uploads/" + p.pdf;
+          ratedVoltage.innerText = p.rated_voltage || "-";
+          ratedPower.innerText = p.rated_power || "-";
+          maxPower.innerText = p.max_power || "-";
+          ratedSpeed.innerText = p.rated_speed || "-";
+          maxSpeed.innerText = p.max_speed || "-";
+          hoverThrust.innerText = p.hover_thrust || "-";
+          maxThrust.innerText = p.max_thrust || "-";
+          propellerSize.innerText = p.propeller_size || "-";
+        });
+      lucide.createIcons();
+    </script>
+  </body>
+</html>
+

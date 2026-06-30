@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBM 2312 Datasheet - VINPROPEL</title>
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .datasheet-container {
+            padding: 120px 0 80px;
+            background: var(--bg-white);
+        }
+
+        .datasheet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+        }
+
+        .product-title h1 {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-title p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        .datasheet-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .spec-table-full {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+
+        .spec-table-full tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        .spec-table-full td {
+            padding: 1rem 0;
+            font-size: 1.1rem;
+        }
+
+        .spec-label {
+            color: var(--text-muted);
+            font-weight: 500;
+            width: 40%;
+        }
+
+        .spec-value {
+            color: var(--text-main);
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .visual-side {
+            background: var(--bg-light);
+            border-radius: 24px;
+            padding: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visual-side img {
+            width: 100%;
+            max-width: 400px;
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.1));
+        }
+
+        .print-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 113, 220, 0.2);
+        }
+
+        @media (max-width: 968px) {
+            .datasheet-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-text">VINPROPEL</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#contact" class="btn btn-primary-small">Contact Sales</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="datasheet-container">
+        <div class="container">
+            <div class="datasheet-header">
+                <div class="product-title">
+                    <div class="section-tag">UAV Propulsion Unit</div>
+                    <h1>CBM 2312</h1>
+                    <p>Lightweight agility for tactical responder units</p>
+                </div>
+                <a href="javascript:window.print()" class="print-btn"><i data-lucide="download"></i> Download PDF</a>
+            </div>
+
+            <div class="datasheet-grid">
+                <div class="visual-side">
+                    <img src="img/portfolio/cbm 2312.png" alt="CBM 2312">
+                </div>
+                <div class="specs-side">
+                    <h2 style="font-family: var(--font-heading); margin-bottom: 1rem;">Core Parameters</h2>
+                    <table class="spec-table-full">
+                        <tr>
+                            <td class="spec-label">Topology</td>
+                            <td class="spec-value">Radial flux out-runner</td>
+                        </tr>
+                        <tr>
+                            <td class="spec-label">Rated Voltage</td>
+                            <td class="spec-value">12V</td>
+                        </tr>
+                        <tr>
+                            <td class="spec-label">Rated Power</td>
+                            <td class="spec-value">80W</td>
+                        </tr>
+                        <tr>
+                            <td class="spec-label">Max Power</td>
+                            <td class="spec-value">200W</td>
+                        </tr>
+                        <tr>
+                            <td class="spec-label">Rated Speed</td>
+                            <td class="spec-value">6500 RPM</td>
+                        </tr>
+                        <tr>
+                            <td class="spec-label">Max Speed</td>
+                            <td class="spec-value">8600 RPM</td>
+                        </tr>
+                        <tr>
+                            <td class="spec-label">Hover Thrust</td>
+                            <td class="spec-value">0.5 kg</td>
+                        </tr>
+                        <tr>
+                            <td class="spec-label">Max Thrust</td>
+                            <td class="spec-value">1.0 kg</td>
+                        </tr>
+                        <tr>
+                            <td class="spec-label">Propeller Size</td>
+                            <td class="spec-value">9 X 4.5</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>
