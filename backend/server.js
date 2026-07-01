@@ -431,12 +431,9 @@ app.get("/sabari", (req, res) => {
 // ======================
 
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, () => {
-
     console.log("==================================");
     console.log(" VINPROPEL Backend Started");
-    console.log(" Server Running : http://localhost:5000");
+    console.log(` Server Running on Port ${PORT}`);
     console.log("==================================");
-
 });
