@@ -206,8 +206,8 @@ loadProducts();
 async function editProduct(id) {
 
     const response = await fetch(
-        `http://localhost:5000/product/${id}`
-    );
+    `${API_URL}/product/${id}`
+);
 
     const product = await response.json();
     window.currentImage = product.image;
