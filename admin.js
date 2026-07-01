@@ -1,10 +1,11 @@
+const API_URL = "https://vinpropel-backend.onrender.com";
 window.editingId = null;
 window.currentImage = "";
 window.currentPdf = "";
 
 async function loadProducts() {
 
-    const response = await fetch("http://localhost:5000/products");
+   const response = await fetch(`${API_URL}/products`);
 
     const products = await response.json();
 
@@ -23,7 +24,7 @@ async function loadProducts() {
             <td>
 
                 <img
-                    src="http://localhost:5000/uploads/${product.image}"
+                    src="${API_URL}/uploads/${product.image}"
                     style="
                         width:70px;
                         height:70px;
@@ -88,8 +89,7 @@ async function addProduct() {
 
         formData.append("image", imageFile);
 
-        const uploadResponse = await fetch(
-            "http://localhost:5000/upload-image",
+        const uploadResponse = await fetch(`${API_URL}/upload-image`, 
             {
                 method: "POST",
                 body: formData
@@ -111,9 +111,7 @@ if (pdfFile) {
 
     formData.append("pdf", pdfFile);
 
-    const uploadResponse = await fetch(
-        "http://localhost:5000/upload-pdf",
-        {
+    const uploadResponse = await fetch(`${API_URL}/upload-pdf`, {
             method: "POST",
             body: formData
         }
@@ -148,9 +146,7 @@ if (pdfFile) {
 
 if (window.editingId) {
 
-    response = await fetch(
-        `http://localhost:5000/product/${window.editingId}`,
-        {
+    response =await fetch(`${API_URL}/product/${window.editingId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -161,9 +157,7 @@ if (window.editingId) {
 
 } else {
 
-    response = await fetch(
-        "http://localhost:5000/add-product",
-        {
+    response = await fetch(`${API_URL}/add-product`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -223,7 +217,7 @@ document.getElementById("currentImageBox").innerHTML = `
 <p><strong>Current Image:</strong></p>
 
 <img
-    src="http://localhost:5000/uploads/${product.image}"
+    src="${API_URL}/uploads/${product.image}"
     style="
         width:120px;
         height:120px;
@@ -238,7 +232,7 @@ document.getElementById("currentPdfBox").innerHTML = `
 <p><strong>Current PDF:</strong></p>
 
 <a
-    href="http://localhost:5000/uploads/${product.pdf}"
+    href="${API_URL}/uploads/${product.pdf}"
     target="_blank"
     style="color:#0d6efd;font-weight:bold;">
 
@@ -275,9 +269,7 @@ async function deleteProduct(id) {
 
     if (!confirm("Delete Product?")) return;
 
-    await fetch(
-        `http://localhost:5000/product/${id}`,
-        {
+    await fetch(`${API_URL}/product/${id}`, {
             method: "DELETE"
         }
     );
