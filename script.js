@@ -1,3 +1,4 @@
+const API_URL = "https://vinpropel-backend.onrender.com";
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Initialize Lucide Icons
     if (typeof lucide !== 'undefined') {
@@ -123,9 +124,10 @@ document.querySelectorAll('.nav-links a[href^="#"]').forEach(link => {
     });
 
 });
+const API_URL = "https://vinpropel-backend.onrender.com";
 async function loadProducts() {
 
-    const response = await fetch("http://localhost:5000/products");
+    const response = await fetch(`${API_URL}/products`);
     const products = await response.json();
 
     const container = document.getElementById("productsContainer");
@@ -139,7 +141,7 @@ async function loadProducts() {
         <div class="lineup-card">
 
             <img
-                src="http://localhost:5000/uploads/${product.image}"
+                src="${API_URL}/uploads/${product.image}"
                 alt="${product.product_name}">
 
             <h3>${product.product_name}</h3>
