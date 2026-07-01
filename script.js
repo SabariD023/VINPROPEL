@@ -124,7 +124,6 @@ document.querySelectorAll('.nav-links a[href^="#"]').forEach(link => {
     });
 
 });
-const API_URL = "https://vinpropel-backend.onrender.com";
 async function loadProducts() {
 
     const response = await fetch(`${API_URL}/products`);
