@@ -550,30 +550,40 @@ padding:20px;
 </div>
     </div>
     <script>
-      const id = new URLSearchParams(window.location.search).get("id");
-      fetch("http://localhost:5000/product/" + id)
-        .then((r) => r.json())
-        .then((p) => {
-          productName.innerText = p.product_name || "";
-          document.getElementById("breadProduct").innerText =
-    p.product_name || "";
-          productDescription.innerText = p.description || "";
+const API_URL = "https://vinpropel-backend.onrender.com";
 
+const id = new URLSearchParams(window.location.search).get("id");
 
-          productImage.src = "http://localhost:5000/uploads/" + p.image;
-          document.getElementById("downloadPdf").href =
-"http://localhost:5000/uploads/" + p.pdf;
-          ratedVoltage.innerText = p.rated_voltage || "-";
-          ratedPower.innerText = p.rated_power || "-";
-          maxPower.innerText = p.max_power || "-";
-          ratedSpeed.innerText = p.rated_speed || "-";
-          maxSpeed.innerText = p.max_speed || "-";
-          hoverThrust.innerText = p.hover_thrust || "-";
-          maxThrust.innerText = p.max_thrust || "-";
-          propellerSize.innerText = p.propeller_size || "-";
-        });
-      lucide.createIcons();
-    </script>
+fetch(`${API_URL}/product/${id}`)
+    .then((r) => r.json())
+    .then((p) => {
+
+        document.getElementById("productName").innerText = p.product_name || "";
+        document.getElementById("breadProduct").innerText = p.product_name || "";
+        document.getElementById("productDescription").innerText = p.description || "";
+
+        document.getElementById("productImage").src =
+            `${API_URL}/uploads/${p.image}`;
+
+        document.getElementById("downloadPdf").href =
+            `${API_URL}/uploads/${p.pdf}`;
+
+        document.getElementById("ratedVoltage").innerText = p.rated_voltage || "-";
+        document.getElementById("ratedPower").innerText = p.rated_power || "-";
+        document.getElementById("maxPower").innerText = p.max_power || "-";
+        document.getElementById("ratedSpeed").innerText = p.rated_speed || "-";
+        document.getElementById("maxSpeed").innerText = p.max_speed || "-";
+        document.getElementById("hoverThrust").innerText = p.hover_thrust || "-";
+        document.getElementById("maxThrust").innerText = p.max_thrust || "-";
+        document.getElementById("propellerSize").innerText = p.propeller_size || "-";
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Failed to load product details.");
+    });
+
+lucide.createIcons();
+</script>
   </body>
 </html>
 
