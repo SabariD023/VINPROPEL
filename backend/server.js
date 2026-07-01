@@ -20,12 +20,15 @@ app.use(
 // ======================
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "root123",
-    database: "vinpropel"
+    host: process.env.DB_HOST || "localhost",
+    port: process.env.DB_PORT || 3306,
+    user: process.env.DB_USER || "root",
+    password: process.env.DB_PASSWORD || "root123",
+    database: process.env.DB_NAME || "vinpropel",
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
-
 db.connect((err) => {
 
     if (err) {
@@ -427,7 +430,7 @@ app.get("/sabari", (req, res) => {
 // Start Server
 // ======================
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
 
